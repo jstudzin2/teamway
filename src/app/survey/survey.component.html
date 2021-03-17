@@ -1,1 +1,53 @@
-<p>survey works!</p>
+<mat-card *ngIf="!myscore">
+  <mat-card-subtitle>
+    Please fill the form
+  </mat-card-subtitle>
+  <mat-card-content>
+    <form [formGroup]="form" id="form" (ngSubmit)="score($event)">
+      <div *ngFor="let question of questions">
+        <h4><strong>{{question.description}}</strong></h4>
+        <mat-radio-group class="radio-group" labelPosition="after" attr.aria-label="{{question.description}}"
+                         formControlName="{{question.id}}">
+          <ng-container *ngFor="let answer of question.answers">
+            <mat-radio-button value="{{answer.id}}">{{answer.value}}</mat-radio-button>
+          </ng-container>
+        </mat-radio-group>
+      </div>
+    </form>
+    <mat-dialog-actions>
+
+      <button
+        mat-raised-button
+        class="mat-primary"
+        type="submit"
+        form="form"
+      >
+        Check
+      </button>
+    </mat-dialog-actions>
+
+  </mat-card-content>
+</mat-card>
+
+
+<mat-card *ngIf="myscore">
+  <mat-card-subtitle>
+    Results:
+  </mat-card-subtitle>
+  <mat-card-content>
+
+    Your total score is {{myscore.myScore}} <br/>
+    It seems that your are {{myscore.introvertic ? 'introvertic' : 'extravertic'}} <br/>
+
+    <mat-dialog-actions>
+
+      <button
+        mat-raised-button (click)="tryAgain()"
+        class="mat-primary"
+      >
+        Try again
+      </button>
+    </mat-dialog-actions>
+
+  </mat-card-content>
+</mat-card>
