@@ -25,14 +25,18 @@ export class SurveyComponent implements OnInit {
       this.questions.forEach(question => {
         this.form.addControl(question.id, new FormControl(question.id, [Validators.required]));
       });
-    })
+      },
+      err => console.log('HTTP Error', err),
+      () => console.log('HTTP request completed.'))
   }
 
   score($event: any) {
     if (this.form.valid) {
       this.service.calculateScore(this.form.value).subscribe(value => {
         this.myscore = value;
-      })
+        },
+        err => console.log('HTTP Error', err),
+        () => console.log('HTTP request completed.'))
     }
   }
 
